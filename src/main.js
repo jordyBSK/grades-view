@@ -1,6 +1,8 @@
 const button = document.querySelector("#button");
 const input = document.querySelector("#sem1");
 const divGrades = document.querySelector("#grades");
+const semesterButton = document.querySelector("#add-semester");
+let count = 1;
 
 button.addEventListener("click", () => {
   const svgOrange = document
@@ -40,10 +42,10 @@ button.addEventListener("click", () => {
 
 input.addEventListener("focus", (event) => {
   const buttonClassList = button.classList;
-
   const svgClassList = button.querySelector("svg");
 
   buttonClassList.remove("ring-gray-300");
+
   svgClassList.classList.remove("text-gray-400");
   svgClassList.classList.add("text-blue-400");
 });
@@ -58,4 +60,27 @@ input.addEventListener("blur", (event) => {
 
   svgClassList.classList.remove("text-blue-400");
   svgClassList.classList.add("text-gray-400");
+});
+
+semesterButton.addEventListener("click", (event) => {
+  count++;
+  if (count <= 8) {
+    const newSemestre = document.createElement("div");
+    newSemestre.className = "px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0";
+
+    const dt = document.createElement("dt");
+    dt.className = "text-sm font-medium text-gray-900 py-2";
+    dt.textContent = "Semestre " + count;
+    newSemestre.appendChild(dt);
+
+    const gradesList = document.createElement("dd");
+    gradesList.className =
+      "mt-1 text-sm leading-6 text-gray-700 sm:col-span-4 sm:mt-0 flex justify-between gap-x-1.5";
+
+    const grades = document.getElementById("grades").cloneNode(true);
+    gradesList.appendChild(grades);
+
+    const allSemester = document.getElementById("all-semester");
+    allSemester.appendChild(newSemestre);
+  }
 });

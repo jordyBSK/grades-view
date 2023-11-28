@@ -1,15 +1,18 @@
-const button = document.getElementById("button");
-const input = document.getElementById("sem1");
-const divGrades = document.getElementById("grades");
-const svgOrange = document
-  .getElementById("svg-orange")
-  .content.querySelector("svg");
-const svgRed = document.getElementById("svg-red").content.querySelector("svg");
-const svgGreen = document
-  .getElementById("svg-green")
-  .content.querySelector("svg");
+const button = document.querySelector("#button");
+const input = document.querySelector("#sem1");
+const divGrades = document.querySelector("#grades");
 
 button.addEventListener("click", () => {
+  const svgOrange = document
+    .getElementById("svg-orange")
+    .content.querySelector("svg");
+  const svgRed = document
+    .getElementById("svg-red")
+    .content.querySelector("svg");
+  const svgGreen = document
+    .getElementById("svg-green")
+    .content.querySelector("svg");
+
   if (input.value <= 6 && input.value % 0.5 === 0 && input.value > 0.5) {
     const newGrades = document.createElement("span");
     newGrades.className =
@@ -33,4 +36,26 @@ button.addEventListener("click", () => {
     }
   }
   input.value = "";
+});
+
+input.addEventListener("focus", (event) => {
+  const buttonClassList = button.classList;
+
+  const svgClassList = button.querySelector("svg");
+
+  buttonClassList.remove("ring-gray-300");
+  svgClassList.classList.remove("text-gray-400");
+  svgClassList.classList.add("text-blue-400");
+});
+
+input.addEventListener("blur", (event) => {
+  const buttonClass = button.classList;
+
+  const svgClassList = button.querySelector("svg");
+
+  buttonClass.remove("ring-blue-300");
+  buttonClass.add("ring-gray-300");
+
+  svgClassList.classList.remove("text-blue-400");
+  svgClassList.classList.add("text-gray-400");
 });

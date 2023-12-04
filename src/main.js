@@ -1,10 +1,10 @@
-const button = document.querySelector("#button");
-const input = document.querySelector(".sem1");
+import { addGrades } from "./addGrades";
+
 const semesterButton = document.querySelector("#add-semester");
-let count = 2;
-const divGrades = document.querySelector(".grades");
+let count = 0;
 
 semesterButton.addEventListener("click", (event) => {
+  const allGrades = [];
   count++;
   const allSemester = document.querySelector("#all-semester");
   const newSemestre = document
@@ -18,67 +18,32 @@ semesterButton.addEventListener("click", (event) => {
     allSemester.appendChild(newSemestre);
     const semester = allSemester.lastElementChild;
     semester.querySelector("dt").innerText = "Semester " + count;
+    const semesterGrades = [];
 
     buttonGrades.addEventListener("click", () => {
-      const svgOrange = document
-        .getElementById("svg-orange")
-        .content.querySelector("svg");
-      const svgRed = document
-        .getElementById("svg-red")
-        .content.querySelector("svg");
-      const svgGreen = document
-        .getElementById("svg-green")
-        .content.querySelector("svg");
-
-      if (
-        inputSemester.value <= 6 &&
-        inputSemester.value % 0.5 === 0 &&
-        inputSemester.value > 0.5
-      ) {
-        const newGrades = document.createElement("span");
-        newGrades.className =
-          "inline-flex items-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-medium text-gray-900 ring-1 ring-inset ring-gray-200";
-
-        let newSvg = document.createElement("svg");
-
-        if (inputSemester.value > 4) {
-          newSvg = svgGreen.cloneNode(true);
-        } else if (inputSemester.value < 4) {
-          newSvg = svgRed.cloneNode(true);
-        } else {
-          newSvg = svgOrange.cloneNode(true);
-        }
-
-        newGrades.appendChild(newSvg);
-        newGrades.appendChild(document.createTextNode(inputSemester.value));
-
-        if (divGrades) {
-          divGrades.appendChild(newGrades);
-        }
-      }
-      inputSemester.value = "";
+      addGrades(inputSemester, divGrades);
     });
   }
-});
 
-input.addEventListener("focus", (event) => {
-  const buttonClassList = button.classList;
-  const svgClassList = button.querySelector("svg");
+  if (count > 7) {
+    semesterButton.remove();
+  }
 
-  buttonClassList.remove("ring-gray-300");
+  inputSemester.addEventListener("focus", (event) => {
+    const svgButton = buttonGrades.querySelector("svg");
 
-  svgClassList.classList.remove("text-gray-400");
-  svgClassList.classList.add("text-blue-400");
-});
+    buttonGrades.classList.add("ring-blue-400");
+    svgButton.classList.remove("text-gray-400");
+    svgButton.classList.add("text-blue-400");
+  });
 
-input.addEventListener("blur", (event) => {
-  const buttonClass = button.classList;
+  inputSemester.addEventListener("blur", (event) => {
+    const buttonClass = buttonGrades.classList;
 
-  const svgClassList = button.querySelector("svg");
+    const svgButton = buttonGrades.querySelector("svg");
 
-  buttonClass.remove("ring-blue-300");
-  buttonClass.add("ring-gray-300");
-
-  svgClassList.classList.remove("text-blue-400");
-  svgClassList.classList.add("text-gray-400");
+    buttonGrades.classList.remove("ring-blue-400");
+    svgButton.classList.remove("text-blue-400");
+    svgButton.classList.add("text-gray-400");
+  });
 });

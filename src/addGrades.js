@@ -1,27 +1,26 @@
-const allGrades = [];
+const semesterGrades = [];
 
-export function calculAverage(allgrades) {
-  if (allGrades.length === 0) {
+export function calculAverage(newSemester) {
+  let sum = 0;
+  if (semesterGrades.length === 0) {
     return null;
   }
 
-  let sum = allgrades.reduce(function (acc, grade) {
-    return acc + grade;
-  }, 0);
+  for (let i = 0; i < semesterGrades.length; i++) {
+    sum += parseFloat(semesterGrades[i]);
+  }
 
-  let moyenne = sum / allgrades.length;
+  let average = sum / semesterGrades.length;
 
-  return moyenne;
-  console.log(moyenne);
+  let spanAverage = (newSemester.querySelector(".moyenne").textContent =
+    0 + average);
+
+  console.log(newSemester);
 }
 
-let spanAverage = (document
-  .querySelector("#semester-template")
-  .content.querySelector("#moyenne").textContent = calculAverage());
+export function addGrades(inputSemester, newSemester) {
+  let divGrades = newSemester.querySelector(".grades");
 
-console.log(spanAverage);
-
-export function addGrades(inputSemester, divGrades) {
   const grades = parseFloat(inputSemester.value);
   const svgOrange = document
     .getElementById("svg-orange")
@@ -33,7 +32,7 @@ export function addGrades(inputSemester, divGrades) {
     .getElementById("svg-green")
     .content.querySelector("svg");
 
-  if (grades <= 6 && grades % 0.5 === 0 && grades > 0.5) {
+  if (grades <= 6 && grades > 0.5 && grades % 0.5 === 0) {
     const newGrades = document.createElement("span");
     newGrades.className =
       "inline-flex items-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-medium text-gray-900 ring-1 ring-inset ring-gray-200";
@@ -52,11 +51,9 @@ export function addGrades(inputSemester, divGrades) {
 
     if (divGrades) {
       divGrades.appendChild(newGrades);
-      allGrades.push(grades);
+      semesterGrades.push(grades);
 
-      // Calculate the new average and log it
-      let spanAverage = calculAverage(allGrades);
-      console.log(spanAverage);
+      calculAverage(newSemester);
     }
   }
   inputSemester.value = "";

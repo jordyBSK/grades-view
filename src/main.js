@@ -1,5 +1,4 @@
 import { addGrades } from "./addGrades";
-import { calculAverage } from "./addGrades";
 
 const semesterButton = document.querySelector("#add-semester");
 let count = 0;
@@ -13,17 +12,14 @@ semesterButton.addEventListener("click", (event) => {
 
   const buttonGrades = newSemestre.querySelector("button");
   const inputSemester = newSemestre.querySelector("input");
-  let divGrades = newSemestre.querySelector(".grades");
 
   if (count <= 8) {
     allSemester.appendChild(newSemestre);
-    const semester = allSemester.lastElementChild;
-    semester.querySelector("dt").innerText = "Semester " + count;
-    const semesterGrades = [];
+    const semestre = allSemester.lastElementChild;
+    semestre.querySelector("dt").innerText = "Semester " + count;
 
     buttonGrades.addEventListener("click", () => {
-      addGrades(inputSemester, divGrades);
-      calculAverage();
+      addGrades(inputSemester, semestre);
     });
   }
 

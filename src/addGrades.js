@@ -1,5 +1,26 @@
 const allGrades = [];
 
+export function calculAverage(allgrades) {
+  if (allGrades.length === 0) {
+    return null;
+  }
+
+  let sum = allgrades.reduce(function (acc, grade) {
+    return acc + grade;
+  }, 0);
+
+  let moyenne = sum / allgrades.length;
+
+  return moyenne;
+  console.log(moyenne);
+}
+
+let spanAverage = (document
+  .querySelector("#semester-template")
+  .content.querySelector("#moyenne").textContent = calculAverage());
+
+console.log(spanAverage);
+
 export function addGrades(inputSemester, divGrades) {
   const grades = parseFloat(inputSemester.value);
   const svgOrange = document
@@ -31,25 +52,12 @@ export function addGrades(inputSemester, divGrades) {
 
     if (divGrades) {
       divGrades.appendChild(newGrades);
+      allGrades.push(grades);
+
+      // Calculate the new average and log it
+      let spanAverage = calculAverage(allGrades);
+      console.log(spanAverage);
     }
-    average(grades);
   }
   inputSemester.value = "";
-}
-
-export function average(grades) {
-  let notes = allGrades.push(grades);
-
-  let sum = 0;
-
-  for (let i = 0; i < allGrades.length; i++) {
-    if (isNaN(allGrades[i]) || allGrades[i] === "") {
-      throw new Error("Element at index " + { i } + "is not a valid number");
-    }
-    sum += parseFloat(allGrades[i]);
-  }
-
-  let average = sum / allGrades.length;
-
-  console.log(average);
 }

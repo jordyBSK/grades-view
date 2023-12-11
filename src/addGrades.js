@@ -1,36 +1,41 @@
 const semesterGrades = [];
 
+const svgOrange = document
+  .getElementById("svg-orange")
+  .content.querySelector("svg");
+const svgRed = document.getElementById("svg-red").content.querySelector("svg");
+const svgGreen = document
+  .getElementById("svg-green")
+  .content.querySelector("svg");
+
 export function calculAverage(newSemester) {
   let sum = 0;
-  if (semesterGrades.length === 0) {
-    return null;
-  }
 
   for (let i = 0; i < semesterGrades.length; i++) {
     sum += parseFloat(semesterGrades[i]);
   }
+  const average = sum / semesterGrades.length;
 
-  let average = sum / semesterGrades.length;
+  const moyenneElement = newSemester.querySelector(".moyenne");
+  moyenneElement.innerHTML = "";
 
-  let spanAverage = (newSemester.querySelector(".moyenne").textContent =
-    0 + average);
+  const cloneSvg = (svg) => moyenneElement.appendChild(svg.cloneNode(true));
 
-  console.log(newSemester);
+  if (average > 4) {
+    cloneSvg(svgGreen);
+  } else if (average < 4) {
+    cloneSvg(svgRed);
+  } else {
+    cloneSvg(svgOrange);
+  }
+
+  moyenneElement.appendChild(document.createTextNode(average));
 }
 
 export function addGrades(inputSemester, newSemester) {
   let divGrades = newSemester.querySelector(".grades");
 
   const grades = parseFloat(inputSemester.value);
-  const svgOrange = document
-    .getElementById("svg-orange")
-    .content.querySelector("svg");
-  const svgRed = document
-    .getElementById("svg-red")
-    .content.querySelector("svg");
-  const svgGreen = document
-    .getElementById("svg-green")
-    .content.querySelector("svg");
 
   if (grades <= 6 && grades > 0.5 && grades % 0.5 === 0) {
     const newGrades = document.createElement("span");

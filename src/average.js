@@ -14,7 +14,7 @@ export function semesterAverage(newSemester, semesterGrades) {
     sum += parseFloat(semesterGrades[i]);
   }
   const average = sum / semesterGrades.length;
-
+  const roundedAvg = Math.round(average * 10) / 10;
   const moyenneElement = newSemester.querySelector(".moyenne");
   moyenneElement.innerHTML = "";
 
@@ -28,7 +28,7 @@ export function semesterAverage(newSemester, semesterGrades) {
     cloneSvg(svgOrange);
   }
 
-  moyenneElement.appendChild(document.createTextNode(average));
+  moyenneElement.appendChild(document.createTextNode(roundedAvg));
   allAverage.push(average);
   generalAverage();
 }
@@ -45,6 +45,7 @@ function generalAverage() {
 
   const generalAvg = sum / allAverage.length;
 
+  const roundedGeneral = Math.round(generalAvg * 10) / 10;
   const cloneSvg = (svg) => generalSpan.appendChild(svg.cloneNode(true));
 
   console.log(generalAvg);
@@ -55,6 +56,6 @@ function generalAverage() {
   } else {
     cloneSvg(svgOrange);
   }
-  generalSpan.appendChild(document.createTextNode(generalAvg));
+  generalSpan.appendChild(document.createTextNode(roundedGeneral));
   console.log(allAverage);
 }

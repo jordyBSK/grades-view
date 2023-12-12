@@ -1,7 +1,7 @@
 import { addGrades } from "./addGrades";
 
 const semesterButton = document.querySelector("#add-semester");
-let count = 0;
+export let count = 0;
 
 semesterButton.addEventListener("click", (event) => {
   count++;
@@ -21,7 +21,7 @@ semesterButton.addEventListener("click", (event) => {
     semestre.querySelector("dt").innerText = "Semester " + count;
 
     buttonGrades.addEventListener("click", () => {
-      addGrades(inputSemester, semestre, semesterGrades);
+      addGrades(inputSemester, semestre, semesterGrades, count);
     });
   }
 
